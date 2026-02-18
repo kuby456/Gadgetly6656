@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Drop Store</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+body{background:#f5f6fa}
+
+/* ---------- HEADER ---------- */
+header{
+  height:70px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  height:45px;
+  margin: 0 auto;
+  
+}
+
+.header-icons{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  cursor:pointer;
+}
+
+/* ---------- PRODUCTS ---------- */
+.products {
+  padding: 40px;
+  display: grid;
+  gap: 25px; /* רווח אחיד בין כל הכרטיסים */
+  grid-template-columns: repeat(4, 1fr); /* 4 מוצרים בשורה במחשב */
+}
+
+/* טאבלט – שניים בשורה */
+@media (max-width: 1024px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* סמארטפון – שניים בשורה */
+@media (max-width: 600px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px; /* קצת פחות רווח מצדדים בנייד */
+    gap: 20px;
+  }
+}
+
+.product {
+  background: white;
+  padding: 5px; /* יותר פנימי מה-grid-gap */
+  border-radius: 15px;
+  box-shadow:  0 3px 12px rgba(0,0,0,0.1);
+  text-align: center;
+
+  /* דגש על רווחים אחידים בתוך הכרטיס */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* מרווח אחיד בין אלמנטים */
+  gap: 10px; /* רווח אחיד בין תמונה, כותרת, מחיר וכפתור */
+}
+
+  .product p {
+  font-weight: bolder;
+    color : green;
+}
+  
+  
+  .product h3{
+    font-weight: 100;
+    display: flex;
+    margin: 10px auto;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+.product img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover; /* תמונה מתאימה לגודל הכרטיס בלי לעוות */
+  height: 120px;
+  border: solid 1px;
+}
+
+.product h3, 
+.product p, 
+.product button {
+  margin: 0; /* אין מרווח מיותר */
+  padding: 0;
+}
+
+.product button {
+  margin-top: 10px;
+  
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 13px;
+  height: 25px;
+  תמיד באמצע */
+  display: flex;           /* הופך את הכפתור לפלקס */
+  justify-content: center; /* מרכז אופקית */
+  align-items: center;     /* מרכז אנכי */
+  
+}
+
+.product button:hover {
+  background: #333;
+}
+  
+  button{
+  background:#111;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  margin-top:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+  .cart button {
+    position: absolute;
+    bottom: 40px;   /* מרחק מהתחתית */
+    left: 20px;     /* מרחק מהצד */
+    right: 20px;    /* מרחק מהצד השני */
+    padding: 10px 0;
+    background: #111;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+/* ---------- CART SIDEBAR ---------- */
+.cart{
+  position:fixed;
+  left:-400px;
+  top:0;
+  width:350px;
+  height: 93%;
+  background:white;
+  box-shadow:2px 0 20px rgba(0,0,0,0.2);
+  padding:20px;
+  transition:0.4s;
+  display:flex;
+  flex-direction:column;
+  z-index: 1000;
+  margin-top: 60px;
+}
+
+.cart.open{left:0}
+
+.cart-items{
+  flex:2;
+  overflow-y:auto;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:#111;
+  color:white;
+  padding:40px;
+  margin-top:80px;
+  text-align:center;
+}
+  
+  .payments{
+  margin-top:25px;
+}
+
+  .card button{
+    position: absulote; 
+   bottom: 100px;
+  }
+.payment-icons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+
+.payment-icons img{
+  filter:brightness(0) invert(1);
+  opacity:0.9;
+}
+  
+  .cart-icon-wrapper{
+  position:relative;
+  cursor:pointer;
+}
+
+.cart-count{
+  position:absolute;
+  top:-8px;
+  left:-10px;
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.bump{
+  animation:bump 0.4s ease;
+}
+
+@keyframes bump{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.35)}
+  100%{transform:scale(1)}
+}
+
+/* באנר נוסף לסל */
+.added-banner{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#00c853;
+  color:white;
+  padding:5px 10px;
+  border-radius:8px;
+  font-size:14px;
+  opacity:0;
+  transition:0.3s;
+}
+
+.product{position:relative;}
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* תמונה+טקסט משמאל, כפתור מימין */
+    padding: 10px 0;
+    margin-top: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* רווח בין תמונה לטקסט+מחיר */
+}
+
+.cart-item img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart-item-text {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* רווח בין שם למחיר */
+}
+
+.cart-item-name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.cart-item-price {
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.remove {
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 30px; /* מרחק גדול מהטקסט */
+}
+  
+ .logout-btn {
+    width: 14%; 
+    height: 30px !important;  
+    font-size: 12px !important;
+    border-radius: 8px;
+    background: #111;      
+    color: white;          
+    border: none;
+
+    /* --- מרכז את הטקסט --- */
+    display: flex;
+    justify-content: center; /* מרכז אופקי */
+    align-items: center;     /* מרכז אנכי */
+
+    transition: background 0.2s ease;
+    position: fixed;
+    top: 10px;
+}
+
+.logout-btn:hover {
+    background: #333;      /* שינוי צבע בהובר */
+}
+</style>
+</head>
+
+<body>
+<!-- סל צד -->
+<div id="cart" class="cart">
+  <button class="logout-btn" onclick="closeCart()">צא</button>
+  <h2 style="margin: 0 auto;">סל</h2>
+  <hr style="width: 100%; margin: 10px auto;">
+  <div id="cartItems" class="cart-items"></div>
+  <button onclick="checkout()">המשך לתשלום</button>
+</div>
+<!-- סל צד -->
+
+
+<!-- HEADER -->
+<header>
+  <!-- הלוגו שלך – שים קובץ בשם logo.png ליד הקובץ -->
+  <img src="Gg.jpg" class="logo">
+
+  <div class="cart-icon-wrapper" onclick="toggleCart()">
+  <span id="cartCount" class="cart-count">0</span>
+
+  <svg id="cartIcon" width="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2">
+    <circle cx="9" cy="21" r="1"/>
+    <circle cx="20" cy="21" r="1"/>
+    <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+  </svg>
+</div>
+</header>
+
+<!-- מוצרים לדוגמה -->
+<section class="products">
+  <div class="product">
+    <img src="https://m.media-amazon.com/images/I/310RYgHCxQL._AC_UF894,1000_QL80_.jpg" alt="אוזניות בלוטוס">
+    <h3>אוזניות בלוטוס</h3>
+    <p>₪79</p>
+    <button onclick="addToCart('אוזניות בלוטוס',79,'https://m.media-amazon.com/images/I/310RYgHCxQL._AC_UF894,1000_QL80_.jpg',this)">הוסף לסל</button> 
+  </div>
+
+  <div class="product">
+    <img src="https://www.thespruce.com/thmb/9sI5kafa-s5DKbtKqjjf0ovhogM=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/urban-outfitters-kodhi-mini-table-lamp-02696abedd644bf89c7a8a95cfb9f8a9.jpg" alt="מנורת לילה">
+    <h3>מנורת לילה</h3>
+    <p>₪59</p>
+    <button onclick="addToCart('מנורת לילה',59,'https://www.thespruce.com/thmb/9sI5kafa-s5DKbtKqjjf0ovhogM=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/urban-outfitters-kodhi-mini-table-lamp-02696abedd644bf89c7a8a95cfb9f8a9.jpg',this)">הוסף לסל</button> 
+  </div>
+
+  <div class="product">
+    <img src="https://m.media-amazon.com/images/I/61VD12lt4bL._AC_UF894,1000_QL80_.jpg" alt="גאדג'ט לרכב">
+    <h3>גאדג'ט לרכב</h3>
+    <p>₪99</p>
+    <button onclick="addToCart('גאדג׳ט לרכב',99,'https://m.media-amazon.com/images/I/61VD12lt4bL._AC_UF894,1000_QL80_.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://thumbs.dreamstime.com/b/black-portable-bluetooth-speaker-wireless-boom-box-isolated-white-background-small-radio-waterproof-stereo-sound-system-phone-238367265.jpg" alt="רמקול נייד">
+    <h3>רמקול נייד</h3>
+    <p>₪129</p>
+    <button onclick="addToCart('רמקול נייד',129,'https://thumbs.dreamstime.com/b/black-portable-bluetooth-speaker-wireless-boom-box-isolated-white-background-small-radio-waterproof-stereo-sound-system-phone-238367265.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://thumbs.dreamstime.com/b/high-quality-product-image-black-smart-band-fitness-tracker-captured-front-view-isolated-clean-white-358147268.jpg" alt="שעון חכם">
+    <h3>שעון חכם</h3>
+    <p>₪199</p>
+    <button onclick="addToCart('שעון חכם',199,'https://thumbs.dreamstime.com/b/high-quality-product-image-black-smart-band-fitness-tracker-captured-front-view-isolated-clean-white-358147268.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://image-us.samsung.com/SamsungUS/home/mobile/mobile-accessories/phone/-ep-n3300twegus/01-112662-EP-N3300_004_Dynamic_White-GalleryImage-1600x1200.jpg?\( product-details-jpg \)" alt="מטען אלחוטי">
+    <h3>מטען אלחוטי</h3>
+    <p>₪49</p>
+    <button onclick="addToCart('מטען אלחוטי',49,'https://image-us.samsung.com/SamsungUS/home/mobile/mobile-accessories/phone/-ep-n3300twegus/01-112662-EP-N3300_004_Dynamic_White-GalleryImage-1600x1200.jpg?\( product-details-jpg \)',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://thumbs.dreamstime.com/b/multicolor-back-covers-smartphone-isolated-white-background-colorful-mobile-phone-case-empty-space-camera-lens-363331246.jpg" alt="כיסוי לסלולרי">
+    <h3>כיסוי לסלולרי</h3>
+    <p>₪39</p>
+    <button onclick="addToCart('כיסוי לסלולרי',39,'https://thumbs.dreamstime.com/b/multicolor-back-covers-smartphone-isolated-white-background-colorful-mobile-phone-case-empty-space-camera-lens-363331246.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://thumbs.dreamstime.com/b/car-camera-video-recorder-isolated-white-background-66468153.jpg" alt="מצלמת רכב">
+    <h3>מצלמת רכב</h3>
+    <p>₪159</p>
+    <button onclick="addToCart('מצלמת רכב',159,'https://thumbs.dreamstime.com/b/car-camera-video-recorder-isolated-white-background-66468153.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://m.media-amazon.com/images/I/51wxfgFQHIL.jpg" alt="אוזניות ספורט">
+    <h3>אוזניות ספורט</h3>
+    <p>₪89</p>
+    <button onclick="addToCart('אוזניות ספורט',89,'https://m.media-amazon.com/images/I/51wxfgFQHIL.jpg',this)">הוסף לסל</button>
+  </div>
+
+  <div class="product">
+    <img src="https://thumbs.dreamstime.com/b/phone-holder-stand-holder-phone-phone-stand-mount-universal-phone-holder-stand-can-be-adjusted-to-height-angle-isolated-317478708.jpg" alt="מעמד לטלפון">
+    <h3>מעמד לטלפון</h3>
+    <p>₪29</p>
+    <button onclick="addToCart('מעמד לטלפון',29,'https://thumbs.dreamstime.com/b/phone-holder-stand-holder-phone-phone-stand-mount-universal-phone-holder-stand-can-be-adjusted-to-height-angle-isolated-317478708.jpg',this)">הוסף לסל</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+ 
+  <div class="payments">
+  <h3>אמצעי תשלום מאובטחים</h3>
+
+  <div class="payment-icons">
+
+    <!-- VISA -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/visa.svg" height="28">
+
+    <!-- MasterCard -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/mastercard.svg" height="28">
+
+    <!-- Amex -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/americanexpress.svg" height="28">
+
+    <!-- ישראכרט (שים קובץ מקומי) -->
+  
+
+    <!-- Apple Pay -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/applepay.svg" height="28">
+
+    <!-- Google Pay -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlepay.svg" height="28">
+
+    <!-- PayPal -->
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/paypal.svg" height="28">
+
+  </div>
+</div>
+</footer>
+
+<script>
+let cart=[];
+
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("open");
+}
+
+function addToCart(name,price,img,btn){
+  cart.push({name,price,img});
+  renderCart();
+  updateCartCount();
+  animateCartIcon();
+  showAddedBanner(btn);
+}
+
+function renderCart(){
+  let container = document.getElementById("cartItems");
+  container.innerHTML = "";
+  cart.forEach((item,i)=>{
+    container.innerHTML += `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <img src="${item.img}">
+          <div class="cart-item-text">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">₪${item.price}</div>
+          </div>
+        </div>
+        <div class="remove" onclick="removeItem(${i})"> מחק</div>
+      </div>
+    `;
+  });
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  renderCart();
+}
+
+function checkout(){
+  alert("מעבר לעמוד תשלום");
+}
+
+// סגירת סל בלחיצה מחוץ
+document.addEventListener("click",e=>{
+  if(!document.getElementById("cart").contains(e.target) &&
+     !e.target.closest("svg")){
+     document.getElementById("cart").classList.remove("open");
+  }
+});
+  
+  function updateCartCount() {
+    const countEl = document.getElementById("cartCount");
+
+    if(cart.length === 0) {
+        countEl.style.display = "none";  // מוסתר כשהסל ריק
+    } else {
+        countEl.style.display = "flex";  // מופיע מהמוצר הראשון
+        countEl.innerText = cart.length;  // עדכון מספר המוצרים
+    }
+}
+
+// לקרוא מיד כשעולה הדף, כדי להסתיר אם הסל ריק
+updateCartCount();
+
+function animateCartIcon(){
+  let icon = document.getElementById("cartIcon");
+  icon.classList.add("bump");
+  setTimeout(()=>icon.classList.remove("bump"),400);
+}
+
+function showAddedBanner(btn){
+  let product = btn.closest(".product");
+  let banner = document.createElement("div");
+  banner.className="added-banner";
+  banner.innerText="נוסף לסל ✓";
+  product.appendChild(banner);
+
+  setTimeout(()=>banner.style.opacity=1,10);
+  setTimeout(()=>banner.remove(),1200);
+}
+  
+  function closeCart() {
+    // בוחר את הסל
+    const cart = document.getElementById("cart");
+
+    // סוגר את הסל אם הוא פתוח
+    if(cart.classList.contains("open")) {
+        cart.classList.remove("open");
+    }
+}
+</script>
+
+</body>
+</html>
