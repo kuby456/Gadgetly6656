@@ -93,7 +93,6 @@ header{
   border-radius: 10px;
   object-fit: cover; /* תמונה מתאימה לגודל הכרטיס בלי לעוות */
   height: 120px;
-  border: solid 1px;
 }
 
 .product h3, 
@@ -317,6 +316,14 @@ footer{
 .logout-btn:hover {
     background: #333;      /* שינוי צבע בהובר */
 }
+  
+  /* הוספת סימן ₪ לכל מחירי המוצרים אוטומטית */
+.products .product p::before {
+    content: "₪";      /* סימן השקל */
+    margin-right: 4px; /* רווח קטן בין השקל למספר */
+    color: green;      /* צבע השקל */
+    font-weight: bolder;
+}
 </style>
 </head>
 
@@ -353,70 +360,70 @@ footer{
   <div class="product">
     <img src="https://m.media-amazon.com/images/I/310RYgHCxQL._AC_UF894,1000_QL80_.jpg" alt="אוזניות בלוטוס">
     <h3>אוזניות בלוטוס</h3>
-    <p>₪79</p>
+    <p>79</p>
     <button onclick="addToCart('אוזניות בלוטוס',79,'https://m.media-amazon.com/images/I/310RYgHCxQL._AC_UF894,1000_QL80_.jpg',this)">הוסף לסל</button> 
   </div>
 
   <div class="product">
     <img src="https://www.thespruce.com/thmb/9sI5kafa-s5DKbtKqjjf0ovhogM=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/urban-outfitters-kodhi-mini-table-lamp-02696abedd644bf89c7a8a95cfb9f8a9.jpg" alt="מנורת לילה">
     <h3>מנורת לילה</h3>
-    <p>₪59</p>
+    <p>59</p>
     <button onclick="addToCart('מנורת לילה',59,'https://www.thespruce.com/thmb/9sI5kafa-s5DKbtKqjjf0ovhogM=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/urban-outfitters-kodhi-mini-table-lamp-02696abedd644bf89c7a8a95cfb9f8a9.jpg',this)">הוסף לסל</button> 
   </div>
 
   <div class="product">
     <img src="https://m.media-amazon.com/images/I/61VD12lt4bL._AC_UF894,1000_QL80_.jpg" alt="גאדג'ט לרכב">
     <h3>גאדג'ט לרכב</h3>
-    <p>₪99</p>
+    <p>99</p>
     <button onclick="addToCart('גאדג׳ט לרכב',99,'https://m.media-amazon.com/images/I/61VD12lt4bL._AC_UF894,1000_QL80_.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://thumbs.dreamstime.com/b/black-portable-bluetooth-speaker-wireless-boom-box-isolated-white-background-small-radio-waterproof-stereo-sound-system-phone-238367265.jpg" alt="רמקול נייד">
     <h3>רמקול נייד</h3>
-    <p>₪129</p>
+    <p>129</p>
     <button onclick="addToCart('רמקול נייד',129,'https://thumbs.dreamstime.com/b/black-portable-bluetooth-speaker-wireless-boom-box-isolated-white-background-small-radio-waterproof-stereo-sound-system-phone-238367265.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://thumbs.dreamstime.com/b/high-quality-product-image-black-smart-band-fitness-tracker-captured-front-view-isolated-clean-white-358147268.jpg" alt="שעון חכם">
     <h3>שעון חכם</h3>
-    <p>₪199</p>
+    <p>199</p>
     <button onclick="addToCart('שעון חכם',199,'https://thumbs.dreamstime.com/b/high-quality-product-image-black-smart-band-fitness-tracker-captured-front-view-isolated-clean-white-358147268.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://image-us.samsung.com/SamsungUS/home/mobile/mobile-accessories/phone/-ep-n3300twegus/01-112662-EP-N3300_004_Dynamic_White-GalleryImage-1600x1200.jpg?\( product-details-jpg \)" alt="מטען אלחוטי">
     <h3>מטען אלחוטי</h3>
-    <p>₪49</p>
+    <p>49</p>
     <button onclick="addToCart('מטען אלחוטי',49,'https://image-us.samsung.com/SamsungUS/home/mobile/mobile-accessories/phone/-ep-n3300twegus/01-112662-EP-N3300_004_Dynamic_White-GalleryImage-1600x1200.jpg?\( product-details-jpg \)',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://thumbs.dreamstime.com/b/multicolor-back-covers-smartphone-isolated-white-background-colorful-mobile-phone-case-empty-space-camera-lens-363331246.jpg" alt="כיסוי לסלולרי">
     <h3>כיסוי לסלולרי</h3>
-    <p>₪39</p>
+    <p>39</p>
     <button onclick="addToCart('כיסוי לסלולרי',39,'https://thumbs.dreamstime.com/b/multicolor-back-covers-smartphone-isolated-white-background-colorful-mobile-phone-case-empty-space-camera-lens-363331246.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://thumbs.dreamstime.com/b/car-camera-video-recorder-isolated-white-background-66468153.jpg" alt="מצלמת רכב">
     <h3>מצלמת רכב</h3>
-    <p>₪159</p>
+    <p>159</p>
     <button onclick="addToCart('מצלמת רכב',159,'https://thumbs.dreamstime.com/b/car-camera-video-recorder-isolated-white-background-66468153.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://m.media-amazon.com/images/I/51wxfgFQHIL.jpg" alt="אוזניות ספורט">
     <h3>אוזניות ספורט</h3>
-    <p>₪89</p>
+    <p>89</p>
     <button onclick="addToCart('אוזניות ספורט',89,'https://m.media-amazon.com/images/I/51wxfgFQHIL.jpg',this)">הוסף לסל</button>
   </div>
 
   <div class="product">
     <img src="https://thumbs.dreamstime.com/b/phone-holder-stand-holder-phone-phone-stand-mount-universal-phone-holder-stand-can-be-adjusted-to-height-angle-isolated-317478708.jpg" alt="מעמד לטלפון">
     <h3>מעמד לטלפון</h3>
-    <p>₪29</p>
+    <p>29</p>
     <button onclick="addToCart('מעמד לטלפון',29,'https://thumbs.dreamstime.com/b/phone-holder-stand-holder-phone-phone-stand-mount-universal-phone-holder-stand-can-be-adjusted-to-height-angle-isolated-317478708.jpg',this)">הוסף לסל</button>
   </div>
 </section>
@@ -482,7 +489,13 @@ function renderCart(){
             <div class="cart-item-price">₪${item.price}</div>
           </div>
         </div>
-        <div class="remove" onclick="removeItem(${i})"> מחק</div>
+        <div class="remove" onclick="removeItem(${i})"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"></polyline>
+  <path d="M19 6l-1 14H6L5 6"></path>
+  <path d="M10 11v6"></path>
+  <path d="M14 11v6"></path>
+  <path d="M9 6V4h6v2"></path>
+</svg></div>
       </div>
     `;
   });
