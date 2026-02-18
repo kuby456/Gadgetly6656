@@ -502,8 +502,9 @@ function renderCart(){
 }
 
 function removeItem(i){
-  cart.splice(i,1);
-  renderCart();
+  cart.splice(i, 1);    // מסיר את הפריט מהרשימה
+  renderCart();          // מרענן את תצוגת הסל
+  updateCartCount();     // מעדכן את המספר שמופיע על האייקון
 }
 
 function checkout(){
