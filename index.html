@@ -451,7 +451,19 @@ font-weight: bolder;
 
 <script>
 let cart=[];
+let audioUnlocked = false;
 
+document.addEventListener("click", () => {
+    if(audioUnlocked) return;
+
+    const sound = document.getElementById("timeoutSound");
+    sound.play().then(()=>{
+        sound.pause();
+        sound.currentTime = 0;
+        audioUnlocked = true;
+        console.log("🔊 אודיו הופעל בהצלחה");
+    }).catch(()=>{});
+});
 function toggleCart(){
   document.getElementById("cart").classList.toggle("open");
 }
