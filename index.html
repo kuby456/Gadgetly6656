@@ -314,8 +314,6 @@ font-weight: bolder;
 </head>
 
 <body>
-  <div id="timeoutMsg"></div>
-  <audio id="timeoutSound" src="5555.mp3" preload="auto"></audio>
   
 <div id="cart" class="cart">
   <button class="tit1" onclick="closeCart()">צא</button>
@@ -549,46 +547,6 @@ function showAddedBanner(btn){
   setTimeout(()=>banner.style.opacity=1,10);
   setTimeout(()=>banner.remove(),1200);
 }
-  let isShowing = false;
-
-function showTimeoutMessage() {
-    if (isShowing) return;
-    isShowing = true;
-
-    const msg = document.getElementById("timeoutMsg");
-    const sound = document.getElementById("timeoutSound");
-
-    // הפעלת הסאונד
-    sound.currentTime = 0;
-    sound.play().catch(() => {}); // מונע שגיאה אם הדפדפן חוסם אוטופליי
-
-    msg.innerText = "אורן נגמר לך הזמן באתר, צא בבקשה";
-    msg.style.position = "fixed";
-    msg.style.top = "100px";
-    msg.style.right = "30px";
-    msg.style.background = "#fff";
-    msg.style.color = "red";
-    msg.style.fontSize = "22px";
-    msg.style.fontWeight = "bold";
-    msg.style.padding = "15px 25px";
-    msg.style.border = "2px solid red";
-    msg.style.borderRadius = "12px";
-    msg.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
-    msg.style.zIndex = "9999";
-    msg.style.width = "80%";
-    // נעלם אחרי 3 שניות
-    setTimeout(() => {
-        msg.innerText = "";
-        msg.removeAttribute("style");
-        isShowing = false; // מאפשר להופיע שוב
-    }, 1500);
-}
-
-// התחלה אחרי רגע קטן
-setTimeout(showTimeoutMessage, 1500);
-
-// חזרה בלופ
-setInterval(showTimeoutMessage, 1000);
   
   function closeCart() {
     // בוחר את הסל
